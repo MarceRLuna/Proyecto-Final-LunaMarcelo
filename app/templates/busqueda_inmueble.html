@@ -1,0 +1,14 @@
+
+{% extends 'padre.html' %}
+
+{% block contenido_que_cambia %}
+
+<form class="form" action="{% url 'buscar_inmueble' %}" method="get">  <!--Cuando se haga click en el botón Buscar, el formulario se estará submiteando (enviando una solicitud) a una url cuyo name="buscar_inmueble"-->
+   
+    <p>Cantidad de dormitorios <input type="number" name="domitorios"></p>  <!--El input envía una solicitud de tipo texto con el nombre "domitorios"-->   
+    
+    <button type="submit">Buscar</button>    
+
+</form>
+    
+{% endblock contenido_que_cambia %}

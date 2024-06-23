@@ -1,0 +1,19 @@
+
+<!--Este tamplate se renderiza cuando se ingresa al mismo a través de una solicitud de tipo GET y se carga el formulario con los datos tal cual figuran en el registro de la base de datos-->
+
+{% extends 'padre.html' %}
+
+{% block contenido_que_cambia %}
+
+<form class="form" action="{% url 'editar_inmuebles' id %}" method="post"> {% csrf_token %} <!--El valor del parámetro "id" lo tenemos a disposición ya que se lo hemos pasado a través del contexto, ver función "editar_inmueble"-->
+    
+    <h2>Formulario Inmueble</h2>
+    
+    {{mi_formulario_inmueble.as_p}}
+
+    <button type="submit"> Actualizar Inmueble</button>    
+
+</form>
+    
+{% endblock contenido_que_cambia %}
+     

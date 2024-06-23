@@ -1,0 +1,27 @@
+{% extends 'padre.html' %}
+
+{% block contenido_que_cambia %}
+
+<h2>Lista de propiedades disponibles</h2>
+
+<ul class="animate__animated animate__fadeInUp" style="margin-top: 25px;">
+
+  {% for propiedad in lista_inmuebles  %} 
+
+    <li style="margin-top: 25px;">
+    {{propiedad}}
+    </li>
+    <div style="display: flex; column-gap: 5px;">
+      <form action="{% url 'eliminar_inmuebles' propiedad.id %}" method="post"> {% csrf_token %} <!--la variable "propiedad" del bucle for toma el valor de cada registro guardado en la tabla y al declar "propiedad.id" tenemos a disposición el valor de id del registro que se quiere eliminar-->
+        <button type="submit">Eliminar</button> <!--cuando el usuario da click en el boton eliminar, el formulario invoca a la url 'eliminar_inmuebles' y con el parámetro propiedad.id nos aseguramos de vinvular el boton "Eliminar" con el registro que se está renderizando -->
+      </form> 
+      <button> <a href="{% url 'editar_inmuebles' propiedad.id %}">Actualizar</a></button>     
+    </div>
+
+  {% endfor %}
+
+</ul> 
+
+<a href="{% url 'inmueble_formulario' %}" style="color: bisque;" class="animate__animated animate__backInUp">Cargar Inmueble</a>
+    
+{% endblock contenido_que_cambia %}

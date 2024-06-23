@@ -1,0 +1,16 @@
+
+{% extends 'padre.html' %}
+
+{% block contenido_que_cambia %}
+
+<form class="form" action="{% url 'propietario_formulario' %}" method="post"> {% csrf_token %}
+    <h2>Formulario Propietario</h2>
+    <br>
+    <br>
+    {{mi_formulario_propietario.as_p}}
+    <br>
+    <br>
+    <button type="submit">Cargar datos del propietario</button>    
+</form>
+   
+{% endblock contenido_que_cambia %}
