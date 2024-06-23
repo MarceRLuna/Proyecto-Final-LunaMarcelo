@@ -1,0 +1,29 @@
+
+{% extends 'padre.html' %}
+
+{% block contenido_que_cambia %}
+
+<h2>Lista de Inquilinos disponibles</h2>
+
+<ul class="animate__animated animate__fadeInUp">
+
+  {% for inquilino in inquilinos  %} 
+
+    <li style="margin-top: 25px;">
+        <a href="{% url 'detalle_inquilino' inquilino.id %}" style="color: bisque;">
+            {{inquilino}}            
+        </a>
+    </li>
+
+    <div style="display: flex; column-gap: 5px;">
+      <button> <a href="{% url 'actualizar_inquilino' inquilino.id %}">Actualizar</a></button>     
+      <button> <a href="{% url 'eliminar_inquilino' inquilino.id %}">Eliminar</a></button>     
+    </div>
+
+  {% endfor %}
+
+</ul> 
+
+<a href="{% url 'crear_inquilino' %}" style="color: bisque; margin-top: 25px;" class="animate__animated animate__backInUp">Nuevo Inquilino</a>
+    
+{% endblock contenido_que_cambia %}

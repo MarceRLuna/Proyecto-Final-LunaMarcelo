@@ -1,9 +1,15 @@
+
 from django.http import HttpResponse 
 from django.shortcuts import render
 from .models import Inmueble, Propietario, Inquilino  # importamos los modelos que utilizaremos en las funciones
 from .forms import Inmueble_Formulario, Inquilino_Formulario, Propietario_Formulario
+from django.views.generic import ListView # nos permite construir la vista en listado de nuestros ítems en nuestro modelo
+from django.views.generic.detail import DetailView # nos permite construir la vista en detalle de un determinado ítem de nuestro modelo
+from django.views.generic.edit import DeleteView, UpdateView, CreateView
 
-# Create your views here.
+
+
+# --------------------- Vistas basadas en funciones -------------------------------.
 
 def inicio(req):
     return render(req, "inicio.html", {})
@@ -178,3 +184,41 @@ def editar_inmueble(req, id):
         }) 
 
         return render(req, "editar_inmuebles.html", {"mi_formulario_inmueble": mi_formulario_inmueble, "id": mi_inmueble.id})
+
+
+
+# -------------------- Vistas basadas en clases -------------------------------
+
+class ListaIquilino (ListView):
+
+    model = Inquilino # utilizamos el modelo para buscar los registros de la tabla correspondiente
+    template_name = 'inquilino_list.html' # definimos el html al que le pasaremos los registros como contexto
+    context_object_name = 'inquilinos' # definimos el nombre de la variable de contexto
+
+
+class InquilinoDetail (DetailView):
+
+    model = Inquilino
+    template_name = 'inquilino_detail.html'
+    context_object_name = 'inquilino'
+
+class InquilinoCreate (CreateView):
+
+    model = Inquilino
+    template_name = 'inquilino_create.html'
+    fields = ['nombre', 'apellido', 'telefono', 'mail','valor_alquiler'] # atributo que recibe una lista y nos permite definir los campos que queremos que se visualizen a la hora de renderizar el formulario
+    success_url = '/lista-inquilino/'
+
+class InquilinoUpdate (UpdateView):
+
+    model = Inquilino
+    template_name = 'inquilino_update.html'
+    fields = ('__all__') # declarado de esta manera indicamos que se visualizan todos los campos.
+    success_url = '/lista-inquilino/'
+    context_object_name = 'inquilino'
+
+class InquilinoDelete (DeleteView):
+
+    model = Inquilino
+    template_name = 'inquilino_delete.html'
+    success_url = '/lista-inquilino/'

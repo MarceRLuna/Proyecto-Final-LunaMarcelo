@@ -1,0 +1,16 @@
+
+
+{% extends 'padre.html' %}
+
+{% block contenido_que_cambia %}
+
+<h2>Vista en detalle del inquilino: {{inquilino.apellido}}</h2>
+
+<ul style="margin-top: 15px;">
+    <p>Nombre: {{inquilino.nombre}}</p>
+    <p>Teléfono: {{inquilino.telefono}}</p>
+    <p>Mail: {{inquilino.mail}}</p>
+    <p>Valor del alquiler actual: $ {{inquilino.valor_alquiler}}</p>
+</ul>
+
+{% endblock contenido_que_cambia %}

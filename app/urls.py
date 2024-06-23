@@ -1,7 +1,8 @@
 
 from django.urls import path
 # desde el archivo views en la carpeta de la aplicación importamos todas las funciones que ejecutaremos al ingresar a las urls
-from app.views import inicio, inmueble_formulario, inquilino_formulario, propietario_formulario, busqueda_inmueble, buscar, lista_inmuebles, eliminar_inmueble, editar_inmueble 
+from app.views import *
+
 
 urlpatterns = [
     path('', inicio, name="inicio"),    
@@ -13,4 +14,11 @@ urlpatterns = [
     path('lista-inmuebles/', lista_inmuebles, name='lista_inmuebles'),
     path('eliminar-inmuebles/<int:id>', eliminar_inmueble, name='eliminar_inmuebles'),
     path('editar-inmuebles/<int:id>', editar_inmueble, name='editar_inmuebles'),
+
+    #urls de las vistas basadas en clases
+    path('lista-inquilino/', ListaIquilino.as_view(), name='lista_inquilinos'),
+    path('detalle-inquilino/<pk>', InquilinoDetail.as_view(), name='detalle_inquilino'), # aquellas urls cuyas clases necesitan recuperar registros de la base de datos, necesitan el parámetro <pk> para identificar el registro con el que se quiere operar 
+    path('crea-inquilino/', InquilinoCreate.as_view(), name='crear_inquilino'),
+    path('actualiza-inquilino/<pk>', InquilinoUpdate.as_view(), name='actualizar_inquilino'),
+    path('elimina-inquilino/<pk>', InquilinoDelete.as_view(), name='eliminar_inquilino'),
 ]
