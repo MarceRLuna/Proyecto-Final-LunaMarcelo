@@ -222,3 +222,4 @@ class InquilinoDelete (DeleteView):
     model = Inquilino
     template_name = 'inquilino_delete.html'
     success_url = '/lista-inquilino/'
+    context_object_name = 'inquilino'
