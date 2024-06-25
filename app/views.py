@@ -8,7 +8,9 @@ from django.views.generic.detail import DetailView # nos permite construir la vi
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 # --------------------- Vistas basadas en funciones -------------------------------.
@@ -134,6 +136,7 @@ def lista_inmuebles(req):
 
 
 # función que permite eliminar un registro de la tabla "Inmueble"
+@staff_member_required(login_url='/login/')
 def eliminar_inmueble(req, id):
     
     inmueble_a_eliminar = Inmueble.objects.get(id=id) # recuperamos de la tabla el registro a eliminar que coincide con el criterio de busqueda del manager get(id=id)
@@ -146,6 +149,7 @@ def eliminar_inmueble(req, id):
 
 
 # función que permite editar un registro de la tabla "Inmueble"
+@login_required()
 def editar_inmueble(req, id):
 
     if req.method == 'POST':
@@ -198,7 +202,7 @@ class ListaIquilino (ListView):
     context_object_name = 'inquilinos' # definimos el nombre de la variable de contexto
 
 
-class InquilinoDetail (DetailView):
+class InquilinoDetail (LoginRequiredMixin, DetailView):
 
     model = Inquilino
     template_name = 'inquilino_detail.html'

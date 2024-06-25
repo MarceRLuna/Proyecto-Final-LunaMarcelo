@@ -12,7 +12,7 @@
         <li><a href="{% url 'lista_inmuebles' %}">Todos los inmuebles</a></li>
         <li><a href="{% url 'registrar' %}">Registrar</a></li>            
         {% if user.is_authenticated %} 
-          <form action="{% url 'logout' %}" method="post" style="display: inline"> {% csrf_token %}            
+          <form action="{% url 'logout' %}" method="post" style="display:inline"> {% csrf_token %}            
             <button type="submit" style="padding: 5px">Logout - ({{user.username}})</button>                       
           </form>
         {% else %}
