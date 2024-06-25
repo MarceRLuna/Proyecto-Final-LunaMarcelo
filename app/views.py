@@ -6,6 +6,8 @@ from .forms import Inmueble_Formulario, Inquilino_Formulario, Propietario_Formul
 from django.views.generic import ListView # nos permite construir la vista en listado de nuestros ítems en nuestro modelo
 from django.views.generic.detail import DetailView # nos permite construir la vista en detalle de un determinado ítem de nuestro modelo
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
 
@@ -223,3 +225,64 @@ class InquilinoDelete (DeleteView):
     template_name = 'inquilino_delete.html'
     success_url = '/lista-inquilino/'
     context_object_name = 'inquilino'
+
+
+
+ # ------------------------- Creación del login  ------------------------------------
+
+def login_view(req):
+
+    if req.method == 'POST':
+
+        mi_formulario = AuthenticationForm(req, data=req.POST)
+
+        if mi_formulario.is_valid():
+
+            data = mi_formulario.cleaned_data
+        
+            usuario = data['username']
+            psw = data['password']
+
+            user = authenticate(username=usuario, password=psw)
+
+            if user:
+                login(req, user)
+                return render(req, "message.html", {"message": f"Bienvenido {usuario}"})
+            else:
+                return render(req, "message.html", {"message": "Datos erróneos"})
+        
+        else:
+            return render(req, "message.html", {"message": "Datos inválidos"})
+    
+    else:
+        mi_formulario = AuthenticationForm()
+
+        return render(req, "login.html", {"mi_formulario": mi_formulario})
+    
+
+# ----------------------- Creación del registro de usuario ----------------------------
+
+def register(req):
+
+    if req.method == 'POST':
+
+        mi_formulario = UserCreationForm(req.POST)
+
+        if mi_formulario.is_valid():
+
+            data = mi_formulario.cleaned_data
+        
+            usuario = data['username']
+            
+            mi_formulario.save()
+
+            return render(req, "message.html", {"message": f"Usuario {usuario} creado con éxito"})
+        
+        else:
+            return render(req, "message.html", {"message": "Datos inválidos"})
+    
+    else:
+        mi_formulario = UserCreationForm()
+
+        return render(req, "registro.html", {"mi_formulario": mi_formulario})
+    

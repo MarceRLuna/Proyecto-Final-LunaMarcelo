@@ -29,7 +29,7 @@ nav ul {
     margin: 0;
 }
 
-nav li {
+nav li{
     display: inline; /* Hace que los ítems del menú estén en una línea horizontal */
     margin-right: 50px; /* Espacio entre los ítems del menú */
 }

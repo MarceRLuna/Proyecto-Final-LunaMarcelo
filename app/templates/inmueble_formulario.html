@@ -4,12 +4,18 @@
 {% block contenido_que_cambia %}
 
 <form class="form" action="{% url 'inmueble_formulario' %}" method="post"> {% csrf_token %}
-    <h2>Formulario Inmueble</h2>
     
-    {{mi_formulario_inmueble.as_p}}
+    <div style="margin-top: 25px; display: flex; gap: 15px; flex-direction: column;">
 
-
-    <button type="submit">Crear Inmueble</button>    
+        <h2>Formulario Inmueble</h2>
+        
+        {{mi_formulario_inmueble.as_p}}    
+            
+        <button type="submit">Crear Inmueble</button>    
+    
+    </div>
+    
+    
  </form>
     
 {% endblock contenido_que_cambia %}

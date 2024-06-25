@@ -1,6 +1,7 @@
 
 from django.urls import path
 # desde el archivo views en la carpeta de la aplicación importamos todas las funciones que ejecutaremos al ingresar a las urls
+from django.contrib.auth.views import LogoutView
 from app.views import *
 
 
@@ -21,4 +22,10 @@ urlpatterns = [
     path('crea-inquilino/', InquilinoCreate.as_view(), name='crear_inquilino'),
     path('actualiza-inquilino/<pk>', InquilinoUpdate.as_view(), name='actualizar_inquilino'),
     path('elimina-inquilino/<pk>', InquilinoDelete.as_view(), name='eliminar_inquilino'),
+
+    #urls para el inicio de sesión
+    path('login/', login_view, name='login'),
+    path('registrar/', register, name='registrar'),
+    path('logout/', LogoutView.as_view(template_name='logout.html'), name='logout'),
+
 ]
