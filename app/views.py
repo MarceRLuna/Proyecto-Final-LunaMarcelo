@@ -2,7 +2,7 @@
 from django.http import HttpResponse 
 from django.shortcuts import render
 from .models import Inmueble, Propietario, Inquilino  # importamos los modelos que utilizaremos en las funciones
-from .forms import Inmueble_Formulario, Inquilino_Formulario, Propietario_Formulario
+from .forms import Inmueble_Formulario, Inquilino_Formulario, Propietario_Formulario, UserEditForm
 from django.views.generic import ListView # nos permite construir la vista en listado de nuestros ítems en nuestro modelo
 from django.views.generic.detail import DetailView # nos permite construir la vista en detalle de un determinado ítem de nuestro modelo
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
@@ -136,7 +136,7 @@ def lista_inmuebles(req):
 
 
 # función que permite eliminar un registro de la tabla "Inmueble"
-@staff_member_required(login_url='/login/')
+@staff_member_required(login_url='/login/') # decorador que permite ingresar a la view solo si hay un usuario logueado y además tiene permiso de superUsuario
 def eliminar_inmueble(req, id):
     
     inmueble_a_eliminar = Inmueble.objects.get(id=id) # recuperamos de la tabla el registro a eliminar que coincide con el criterio de busqueda del manager get(id=id)
@@ -148,8 +148,8 @@ def eliminar_inmueble(req, id):
     return render(req, "lista_inmuebles.html", {"lista_inmuebles" : mis_inmuebles}) # renderizamos todos los registros 
 
 
+@login_required() # decorador que permite ingresar a la view solo si hay un usuario logueado.
 # función que permite editar un registro de la tabla "Inmueble"
-@login_required()
 def editar_inmueble(req, id):
 
     if req.method == 'POST':
@@ -289,4 +289,38 @@ def register(req):
         mi_formulario = UserCreationForm()
 
         return render(req, "registro.html", {"mi_formulario": mi_formulario})
+    
+
+# ----------------------- Edición de perfil -------------------------------
+
+@login_required()
+def editar_perfil(req):
+
+    usuario = req.user # recuperamos al usuario que envía la request
+
+    if req.method == 'POST':
+        
+        mi_formulario_perfil = UserEditForm(req.POST, instance=req.user)
+
+        if mi_formulario_perfil.is_valid():
+
+            data = mi_formulario_perfil.cleaned_data
+                      
+            usuario.first_name = data['first_name']
+            usuario.last_name = data['last_name']
+            usuario.email = data['email']
+            usuario.set_password(data['password_1'])            
+
+            usuario.save()
+
+            return render(req, "message.html", {"message": "Datos actualizado con éxito"})
+        
+        else:
+            #return render(req, "message.html", {"message": "Datos inválidos"})
+            return render(req, "editar_perfil.html", {"mi_formulario_perfil": mi_formulario_perfil})
+    else:
+      
+       mi_formulario_perfil = UserEditForm(instance= req.user) 
+
+       return render(req, "editar_perfil.html", {"mi_formulario_perfil": mi_formulario_perfil})
     

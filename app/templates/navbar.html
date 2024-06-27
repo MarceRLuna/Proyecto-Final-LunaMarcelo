@@ -17,7 +17,13 @@
           </form>
         {% else %}
           <li><a href="{% url 'login' %}">Ingresar</a></li>        
-        {% endif %}          
+          {% endif %}
+        
+          <!-- se muestra el enlace a 'Editar Perfil' solo cuando el usuario está logueado -->
+        {% if user.is_authenticated %} 
+          <li><a href="{% url 'editar_perfil' %}">Editar Perfil</a></li>         
+        {% endif %}
+          
       </ul>
     </nav>
 </header>
