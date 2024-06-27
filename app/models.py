@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -43,5 +44,9 @@ class Inquilino(models.Model):
                    - {self.telefono}
                    - {self.mail}
                    - {self.valor_alquiler}'''
+    
 
+class Avatar(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)    
+    imagen = models.ImageField(upload_to='avatares', blank=True, null=True)
 
