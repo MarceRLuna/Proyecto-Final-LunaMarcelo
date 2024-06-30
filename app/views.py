@@ -1,8 +1,8 @@
 
 from django.http import HttpResponse 
 from django.shortcuts import render
-from .models import Inmueble, Propietario, Inquilino  # importamos los modelos que utilizaremos en las funciones
-from .forms import Inmueble_Formulario, Inquilino_Formulario, Propietario_Formulario, UserEditForm
+from .models import Inmueble, Propietario, Inquilino, Avatar  # importamos los modelos que utilizaremos en las funciones
+from .forms import Inmueble_Formulario, Inquilino_Formulario, Propietario_Formulario, UserEditForm, Avatar_Formulario
 from django.views.generic import ListView # nos permite construir la vista en listado de nuestros ítems en nuestro modelo
 from django.views.generic.detail import DetailView # nos permite construir la vista en detalle de un determinado ítem de nuestro modelo
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
@@ -16,7 +16,13 @@ from django.contrib.admin.views.decorators import staff_member_required
 # --------------------- Vistas basadas en funciones -------------------------------.
 
 def inicio(req):
-    return render(req, "inicio.html", {})
+
+    try:
+        avatar = Avatar.objects.get(user = req.user.id)
+        return render(req, "inicio.html", {'url': avatar.imagen.url})
+    except:
+         return render(req, "inicio.html", {})  
+
 
 
 def inmueble_formulario(req):
@@ -248,7 +254,7 @@ def login_view(req):
             psw = data['password']
 
             user = authenticate(username=usuario, password=psw)
-
+            
             if user:
                 login(req, user)
                 return render(req, "message.html", {"message": f"Bienvenido {usuario}"})
@@ -323,4 +329,30 @@ def editar_perfil(req):
        mi_formulario_perfil = UserEditForm(instance= req.user) 
 
        return render(req, "editar_perfil.html", {"mi_formulario_perfil": mi_formulario_perfil})
+    
+
+def agregar_avatar(req):
+    
+    if req.method == 'POST':
+        
+        mi_formulario_avatar = Avatar_Formulario(req.POST, req.FILES)
+
+        if mi_formulario_avatar.is_valid():
+
+            data = mi_formulario_avatar.cleaned_data
+                      
+            avatar = Avatar(user=req.user, imagen=data['imagen'])          
+
+            avatar.save()
+
+            return render(req, "message.html", {"message": "Avatar cargado con éxito"})
+        
+        else:
+            return render(req, "message.html", {"message": "Datos inválidos"})
+            
+    else:
+      
+       mi_formulario_avatar = Avatar_Formulario() 
+
+       return render(req, "agregar_avatar.html", {"mi_formulario_avatar": mi_formulario_avatar})
     

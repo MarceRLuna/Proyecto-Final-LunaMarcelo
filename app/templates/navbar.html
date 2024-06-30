@@ -21,9 +21,9 @@
         
           <!-- se muestra el enlace a 'Editar Perfil' solo cuando el usuario está logueado -->
         {% if user.is_authenticated %} 
-          <li><a href="{% url 'editar_perfil' %}">Editar Perfil</a></li>         
-        {% endif %}
-          
+          <li><a href="{% url 'editar_perfil' %}">Editar Perfil</a></li> 
+          <img src="{{url}}" alt="avatar" style="width: 3%;">                 
+        {% endif %}          
       </ul>
     </nav>
 </header>
