@@ -16,8 +16,12 @@
     </li>
 
     <div style="display: flex; column-gap: 5px;">
-      <button> <a href="{% url 'actualizar_inquilino' inquilino.id %}">Actualizar</a></button>     
-      <button> <a href="{% url 'eliminar_inquilino' inquilino.id %}">Eliminar</a></button>     
+      <button style="padding: 10px 20px; margin-top: 5px; background-color: #4CAF50; color: white; border: none;  border-radius: 5px;  cursor: pointer;"> 
+        <a href="{% url 'actualizar_inquilino' inquilino.id %}" style="text-decoration: none; color: white;">Actualizar</a>
+      </button>     
+      <button style="padding: 10px 20px; margin-top: 5px; background-color: #4CAF50; color: white; border: none;  border-radius: 5px;  cursor: pointer;"> 
+        <a href="{% url 'eliminar_inquilino' inquilino.id %}" style="text-decoration: none; color: white;">Eliminar</a>
+      </button>     
     </div>
 
   {% endfor %}

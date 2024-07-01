@@ -58,6 +58,7 @@ class UserEditForm (UserChangeForm):
             raise forms.ValidationError('Error, las contraseñas no coinciden')
         return psw_2
 
+
 class Avatar_Formulario(forms.ModelForm):
     class Meta:
         model = Avatar

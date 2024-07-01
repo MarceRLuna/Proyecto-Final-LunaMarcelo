@@ -13,15 +13,19 @@
     </li>
     <div style="display: flex; column-gap: 5px;">
       <form action="{% url 'eliminar_inmuebles' propiedad.id %}" method="post"> {% csrf_token %} <!--la variable "propiedad" del bucle for toma el valor de cada registro guardado en la tabla y al declar "propiedad.id" tenemos a disposición el valor de id del registro que se quiere eliminar-->
-        <button type="submit">Eliminar</button> <!--cuando el usuario da click en el boton eliminar, el formulario invoca a la url 'eliminar_inmuebles' y con el parámetro propiedad.id nos aseguramos de vinvular el boton "Eliminar" con el registro que se está renderizando -->
+        <button type="submit" style="padding: 10px 20px; margin-top: 10px; background-color: #4CAF50; color: white; border: none;  border-radius: 5px;  cursor: pointer;">
+          Eliminar
+        </button> <!--cuando el usuario da click en el boton eliminar, el formulario invoca a la url 'eliminar_inmuebles' y con el parámetro propiedad.id nos aseguramos de vinvular el boton "Eliminar" con el registro que se está renderizando -->
       </form> 
-      <button> <a href="{% url 'editar_inmuebles' propiedad.id %}">Actualizar</a></button>     
+      <button style="padding: 10px 20px; margin-top: 10px; background-color: #4CAF50; color: white; border: none;  border-radius: 5px;  cursor: pointer;"> 
+        <a href="{% url 'editar_inmuebles' propiedad.id %}" style="text-decoration: none; color: white;">Actualizar</a>
+      </button>     
     </div>
 
   {% endfor %}
 
 </ul> 
 
-<a href="{% url 'inmueble_formulario' %}" style="color: bisque;" class="animate__animated animate__backInUp">Cargar Inmueble</a>
+<a href="{% url 'inmueble_formulario' %}" style="color: bisque; text-decoration: none; margin-top: 30px;" class="animate__animated animate__backInUp">Cargar Inmueble</a>
     
 {% endblock contenido_que_cambia %}

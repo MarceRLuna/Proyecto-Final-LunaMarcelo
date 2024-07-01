@@ -1,29 +1,39 @@
 
+{% load static %}
 
 <header>
-    <nav>
+    <nav style="display: inline; height: 50px; justify-content: center; align-items: center;">
       <ul>
         <li><a href="{% url 'inicio' %}">Inicio</a></li>
         <li><a href="{% url 'inmueble_formulario' %}">Inmueble</a></li>
         <li><a href="{% url 'propietario_formulario' %}">Propietario</a></li>
         <li><a href="{% url 'inquilino_formulario' %}">Inquilino</a></li>
         <li><a href="{% url 'lista_inquilinos' %}">Lista de Inquilinos</a></li>
-        <li><a href="{% url 'busqueda_inmueble' %}">Buscar</a></li>
+        <li><a href="{% url 'busqueda_inmueble' %}">Buscar Inmueble</a></li>
         <li><a href="{% url 'lista_inmuebles' %}">Todos los inmuebles</a></li>
-        <li><a href="{% url 'registrar' %}">Registrar</a></li>            
-        {% if user.is_authenticated %} 
+        
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'editar_perfil' %}">Editar Perfil</a></li> 
+          <li>
+            <a href="{% url 'agregar_avatar' %}"><img src="{{url}}" alt="avatar" style="width: 2%; border-radius: 15px;"></a> 
+          </li> 
           <form action="{% url 'logout' %}" method="post" style="display:inline"> {% csrf_token %}            
-            <button type="submit" style="padding: 5px">Logout - ({{user.username}})</button>                       
+            <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none;  border-radius: 5px;  cursor: pointer;"> Logout - ({{user.username}}) </button>                       
           </form>
         {% else %}
           <li><a href="{% url 'login' %}">Ingresar</a></li>        
-          {% endif %}
-        
-          <!-- se muestra el enlace a 'Editar Perfil' solo cuando el usuario está logueado -->
-        {% if user.is_authenticated %} 
-          <li><a href="{% url 'editar_perfil' %}">Editar Perfil</a></li> 
-          <img src="{{url}}" alt="avatar" style="width: 3%;">                 
-        {% endif %}          
-      </ul>
+          <li><a href="{% url 'registrar' %}">Registrar</a></li>            
+          <li>
+            <a href="{% url 'login' %}"><img src="{% static 'assets/img/perfil_vacio.png' %}" alt="avatar_vacio" style="width: 2%; border-radius: 15px;"></a> 
+          </li>                          
+        {% endif %}
+      </ul>      
     </nav>
 </header>
+
+
+  
+  
+  
+ 
+ 
